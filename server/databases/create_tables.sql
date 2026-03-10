@@ -1,0 +1,71 @@
+PRAGMA foreign_keys = OFF;
+
+DROP TABLE IF EXISTS OrderItem;
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS MenuItem;
+DROP TABLE IF EXISTS Store;
+DROP TABLE IF EXISTS Driver;
+DROP TABLE IF EXISTS Account;
+
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE Account (
+    AccountID INTEGER PRIMARY KEY,
+    Username TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL,
+    Role TEXT CHECK (Role IN ('USER', 'ADMIN')) NOT NULL,
+    Name TEXT NOT NULL,
+    Address TEXT,
+    Phone TEXT
+);
+
+CREATE TABLE Store (
+    StoreID INTEGER PRIMARY KEY,
+    Name TEXT UNIQUE NOT NULL,
+    Location TEXT
+);
+
+CREATE TABLE Driver (
+    DriverID INTEGER PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Phone TEXT,
+    IsActive INTEGER NOT NULL CHECK (IsActive IN (0, 1)) DEFAULT 1
+);
+
+CREATE TABLE MenuItem (
+    MenuItemID INTEGER PRIMARY KEY,
+    StoreID INTEGER NOT NULL,
+    Name TEXT NOT NULL,
+    Price REAL NOT NULL,
+    FOREIGN KEY (StoreID) REFERENCES Store(StoreID)
+);
+
+CREATE TABLE Orders (
+    OrderID INTEGER PRIMARY KEY,
+    OrderTime DATETIME DEFAULT CURRENT_TIMESTAMP,
+    StoreID INTEGER NOT NULL,
+    UserID INTEGER NOT NULL,
+    Status TEXT CHECK (Status IN ('UNSHIPPED', 'SHIPPED', 'COMPLETED')) DEFAULT 'UNSHIPPED',
+    DeliveryAddress TEXT NOT NULL,
+    DriverID INTEGER,
+    FOREIGN KEY (StoreID) REFERENCES Store(StoreID),
+    FOREIGN KEY (UserID) REFERENCES Account(AccountID),
+    FOREIGN KEY (DriverID) REFERENCES Driver(DriverID)
+);
+
+CREATE TABLE OrderItem (
+    OrderItemID INTEGER PRIMARY KEY,
+    OrderID INTEGER NOT NULL,
+    MenuItemID INTEGER NOT NULL,
+    Quantity INTEGER NOT NULL,
+    UnitPrice REAL NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (MenuItemID) REFERENCES MenuItem(MenuItemID)
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_orders_user ON Orders(UserID);
+CREATE INDEX IF NOT EXISTS idx_orders_store ON Orders(StoreID);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON Orders(Status);
+CREATE INDEX IF NOT EXISTS idx_menuitem_store ON MenuItem(StoreID);
+
