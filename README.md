@@ -44,7 +44,7 @@ cuhksz-food-ordering-system/
 │
 ├── docs/
 │   ├── schema.png           # Database E-R Diagram
-│   ├── schema_2.png           # Database E-R Diagram
+│   ├── schema_2.png         # Database E-R Diagram
 │   └── Project_Report.pdf   # Full technical documentation
 │
 ├── requirements.txt         # Project dependencies (Flask, Bcrypt, Requests)
