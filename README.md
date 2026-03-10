@@ -5,9 +5,8 @@
 [![Database](https://img.shields.io/badge/Database-SQLite3-orange.svg)]()
 [![Status](https://img.shields.io/badge/Status-Completed-brightgreen.svg)]()
 
-**Author:** Annabel Leonardi
-**Contact:** https://www.linkedin.com/in/annabel-leonardi/
- | annabel.leonardi@gmail.com
+**Author:** Annabel Leonardi | Final-Year Fintech @ CUHK-Shenzhen
+**Contact:** https://www.linkedin.com/in/annabel-leonardi/ | annabel.leonardi@gmail.com
 
 ---
 
